@@ -20,41 +20,51 @@ class Fraction {
 		num = top;
 		denom = bottom;
 	
-		// Negative sign in denominator or both numerator and denominator fix
-		if(denom < 0){
+		//Simplify fraction by finding GCD
+		int a, b, rem;
+		
+		boolean numNeg, denomNeg;//Strip off negative signs before running the algorithm
+		numNeg = denomNeg = false;
+		if(num < 0){
+			numNeg = true;
 			num = (num * -1);
+		}
+		if(denom < 0){
+			denomNeg = true;
 			denom = (denom * -1);
 		}
-
-		// Zero in numerator fix
-		if(num == 0){
-			denom = 0;
-		}
 		
-		//Simplify fraction by finding GCD
-		int bigInt, littleInt, rem;// rem=bigInt%littleInt
+		if(denom != 0 && num != 0){// Check for possible division by zero
+			a=denom;
+			b=num;
 
-		if(denom !=0){// Check for possible division by zero
-			if(num<denom){// Check which int is larger for GCD algorithm
-				bigInt=denom;
-				littleInt=num;
-			} else {
-				bigInt=num;
-				littleInt=denom;
-			}
-			
-			if(bigInt%littleInt!=0){ // Check if gcd already found
+			if(a%b!=0){ // Check if gcd already found
 				// GCD algorithm
-				while(bigInt%littleInt!=0){
-					rem=(bigInt%littleInt);
-					bigInt=littleInt;
-					littleInt=rem;			
+				while(a%b!=0){
+					rem=(a%b);
+					a=b;
+					b=rem;			
 				}
 			}
 			
 			// Divide numerator and denominator by the GCD
-			num=num/littleInt;
-			denom=denom/littleInt;
+			num=num/b;
+			denom=denom/b;
+			
+			//Apply stripped negatives back
+			if(numNeg == true){
+				num = (num * -1);
+			}
+
+			if(denomNeg == true){
+				denom = (denom * -1);
+			}
+		}
+		
+		// Negative sign in denominator fix
+		if(denom < 0){
+			num = (num * -1);
+			denom = (denom * -1);
 		}
 	}
 
@@ -81,6 +91,10 @@ class Fraction {
 			return "NaN";
 		}
 
+		if(num == 0 && denom != 0){ //Check if fraction equals zero
+			return ("" + num);
+		}
+
 		if(denom == 1) { //Check if a whole number
 			return ("" + num);
 		}
@@ -91,12 +105,13 @@ class Fraction {
 	//Method that multiplies two fractions
 	public Fraction mul(Fraction n){
 
-		Fraction result = new Fraction(0, 0); //Create new fraction
+		Fraction result; //Create new fraction
 		
 		if(denom == 0 || n.getDenom() == 0){ //Check if division by zero 
+			result = new Fraction(1,0);
 			return result;			
 		}
-
+		
 		int topResult = (num * n.getNum());
 		int botResult = (denom * n.getDenom());	
 		result = new Fraction(topResult, botResult); //Create new fraction
@@ -110,6 +125,7 @@ class Fraction {
 		Fraction result = new Fraction(0, 0); //Create new fraction
 		
 		if(denom == 0 || n.getDenom() == 0){ //Check if divsion by zero 
+			result = new Fraction(1,0);
 			return result;			
 		}
 
@@ -126,6 +142,7 @@ class Fraction {
 		Fraction result = new Fraction(0, 0); //Create new fraction
 		
 		if(denom == 0 || n.getDenom() == 0){ //Check if division by zero 
+			result = new Fraction(1,0);
 			return result;			
 		}
 		
@@ -141,6 +158,7 @@ class Fraction {
 		Fraction result = new Fraction(0, 0); //Create new fraction
 		
 		if(denom == 0 || n.getDenom() == 0){ //Check if division by zero 
+			result = new Fraction(1,0);
 			return result;			
 		}
 		

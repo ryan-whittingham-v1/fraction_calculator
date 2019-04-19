@@ -5,8 +5,9 @@ April 16th, 2019
 -------------------
 PA1: Fraction Class
 -------------------
-Fraction is a Java class that enables the use of rational numbers in fraction notation.
-Includes methods for add, subtract, multiply, divide, and decimal conversion of fractions.  
+Fraction is a Java class that allows for the creation and arithmetic
+of fractional numbers. It includes methods for add, subtract, 
+multiply, divide, and decimal conversion.  
 */
 
 class Fraction {
@@ -21,11 +22,10 @@ class Fraction {
 		denom = bottom;
 	
 		//Simplify fraction by finding GCD
-		int a, b, rem;
-		
-		boolean numNeg, denomNeg;//Strip off negative signs before running the algorithm
+		int a, b, rem;//Variables for GCD algorithm
+		boolean numNeg, denomNeg;//Negative number flags
 		numNeg = denomNeg = false;
-		if(num < 0){
+		if(num < 0){//Strip off negative sign before GCD algorithm
 			numNeg = true;
 			num = (num * -1);
 		}
@@ -37,7 +37,6 @@ class Fraction {
 		if(denom != 0 && num != 0){// Check for possible division by zero
 			a=denom;
 			b=num;
-
 			if(a%b!=0){ // Check if gcd already found
 				// GCD algorithm
 				while(a%b!=0){
@@ -51,7 +50,7 @@ class Fraction {
 			num=num/b;
 			denom=denom/b;
 			
-			//Apply stripped negatives back
+			//Apply negatives back if negative flag is true
 			if(numNeg == true){
 				num = (num * -1);
 			}
@@ -87,15 +86,15 @@ class Fraction {
 	//Method that overides toString to return fraction as a string
 	public String toString(){
 		
-		if(denom == 0){ //Check if division by zero
+		if(denom == 0){ //If division by zero
 			return "NaN";
 		}
 
-		if(num == 0 && denom != 0){ //Check if fraction equals zero
+		if(num == 0 && denom != 0){ //If fraction equals zero
 			return ("" + num);
 		}
 
-		if(denom == 1) { //Check if a whole number
+		if(denom == 1) { //If a whole number
 			return ("" + num);
 		}
 
@@ -112,8 +111,8 @@ class Fraction {
 			return result;			
 		}
 		
-		int topResult = (num * n.getNum());
-		int botResult = (denom * n.getDenom());	
+		int topResult = (num * n.getNum());//Multiply numerators
+		int botResult = (denom * n.getDenom());//Multiply denominators	
 		result = new Fraction(topResult, botResult); //Create new fraction
 		return result;
 		
@@ -129,8 +128,8 @@ class Fraction {
 			return result;			
 		}
 
-		int topResult = (num * n.getDenom());
-		int botResult = (denom * n.getNum());	
+		int topResult = (num * n.getDenom());//Multiply numerator by denominator of new fraction
+		int botResult = (denom * n.getNum());//Multiply denominator by numerator of new fraction
 		result = new Fraction(topResult, botResult); //Create new fraction
 		return result;
 		
@@ -146,8 +145,8 @@ class Fraction {
 			return result;			
 		}
 		
-		int topResult = ((num * n.getDenom()) + (denom * n.getNum()));
-		int botResult = (denom * n.getDenom());	
+		int topResult = ((num * n.getDenom()) + (denom * n.getNum()));//Multiply for like bases and add numerators
+		int botResult = (denom * n.getDenom());	//Multiply for like bases
 		result = new Fraction(topResult, botResult); //Create new fraction
 		return result;
 	}	
@@ -162,8 +161,8 @@ class Fraction {
 			return result;			
 		}
 		
-		int topResult = ((num * n.getDenom()) - (denom * n.getNum()));
-		int botResult = (denom * n.getDenom());	
+		int topResult = ((num * n.getDenom()) - (denom * n.getNum()));//Multiply for like bases and substract numerators
+		int botResult = (denom * n.getDenom());	//Multiply for like bases
 		result = new Fraction(topResult, botResult); //Create new fraction
 		return result;
 	}
@@ -175,7 +174,7 @@ class Fraction {
 			return Double.NaN;			
 		}
 		
-		return ((double)num / (double)denom);
+		return ((double)num / (double)denom);//Cast int variables to doubles
 	}
 }
 	
